@@ -10,14 +10,14 @@ Capstone projects are progects assigned by coding courses to practice new skills
     Used apis:
     <ul>
           <li>
-      Search cocktail by name
+      Search cocktail by name <br/>
 www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita
     <li>
-      Filter by alcoholic
+      Filter by alcoholic <br/>
 www.thecocktaildb.com/api/json/v1/1/filter.php?a=Alcoholic
     </li>
   <li>
-    Search by ingredient
+    Search by ingredient <br/>
 www.thecocktaildb.com/api/json/v1/1/filter.php?i=Gin
   </li>
     </ul>
