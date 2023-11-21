@@ -8,7 +8,8 @@ Capstone projects are progects assigned by coding courses to practice new skills
   </li>
   <li>
     Used apis:
-    <li>
+    <ul>
+          <li>
       Search cocktail by name
 www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita
     <li>
@@ -19,5 +20,6 @@ www.thecocktaildb.com/api/json/v1/1/filter.php?a=Alcoholic
     Search by ingredient
 www.thecocktaildb.com/api/json/v1/1/filter.php?i=Gin
   </li>
+    </ul>
   </li>
 </ul>
