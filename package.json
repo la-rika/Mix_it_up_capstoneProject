@@ -1,0 +1,18 @@
+{
+  "name": "mix_it_up_capstoneproject",
+  "version": "1.0.0",
+  "description": "Capstone projects are progects assigned by coding courses to practice new skills just learned.",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js",
+    "test": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "nodemon": "^3.0.1"
+  }
+}
