@@ -1,5 +1,17 @@
 <%- include('parts/header') %>
 
-<h1>ciao</h1>
+    <div style="display: flex;">
+        <img src="images/background.jpeg" alt="backgroundImage" class="homepage-image">
+        <div class="form-container">
+            <div class="form-inner-container">
+                <h1 class="title">Mix it up</h1>
+                <form class="searchBar" action="/" method="post">
+                    <input type="text" name="cocktailName" id="cocktailName" class="search-cocktail-bar">
+                    <button type="submit">click</button>
+                </form>
+            </div>
+        </div>
+    </div>
 
-<%- include('parts/footer') %>
+
+    <%- include('parts/footer') %>
