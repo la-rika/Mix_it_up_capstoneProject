@@ -1,16 +1,22 @@
 <%- include('parts/header') %>
 
     <div style="display: flex;">
-        <img src="images/background.jpeg" alt="backgroundImage" class="homepage-image">
+        <div style="width: 50%;height: 100vh;">
+            <div class="ingredients-modal">
+                ciao
+            </div>
+            <img src="images/background.jpeg" alt="backgroundImage" class="homepage-image">
+        </div>
         <div style="width: 50%;">
             <div class="form-container">
                 <h1 class="title">Mix it up</h1>
-                <form class="searchBar" action="/" method="post">
-                    <input type="text" name="cocktailName" id="cocktailName" class="search-cocktail-bar" placeholder="Search cocktail by name" autofocus>
+                <form class="searchBar" action="/" method="get">
+                    <input type="text" name="cocktailName" id="cocktailName" class="search-cocktail-bar"
+                        placeholder="Search cocktail by name" autofocus>
                     <button type="submit"><img src="images/icons/search-icon.svg"></button>
                 </form>
                 <div class="link-container">
-                    <p class="categories-text">or search it by <span><a href="" >categories</a></span></p>
+                    <p class="categories-text">or search it by <span><a href="">categories</a></span></p>
                 </div>
             </div>
         </div>
