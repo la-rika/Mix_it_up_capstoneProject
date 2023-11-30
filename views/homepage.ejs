@@ -3,14 +3,15 @@
     <div style="display: flex;">
         <div style="width: 50%;height: 100vh;">
             <div class="ingredients-modal">
-                ciao
+                <%= name %>
+                <%= ingredients %>
             </div>
             <img src="images/background.jpeg" alt="backgroundImage" class="homepage-image">
         </div>
         <div style="width: 50%;">
             <div class="form-container">
                 <h1 class="title">Mix it up</h1>
-                <form class="searchBar" action="/" method="get">
+                <form class="searchBar" action="/" method="post">
                     <input type="text" name="cocktailName" id="cocktailName" class="search-cocktail-bar"
                         placeholder="Search cocktail by name" autofocus>
                     <button type="submit"><img src="images/icons/search-icon.svg"></button>
