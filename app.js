@@ -17,24 +17,37 @@ app.use(bodyParser.json());//analizza i dati json ottenuti dal body della reques
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(dirName + '/public'));
 
-let cocktailName ='';
-let cocktailIngredients=[];
+let cocktailName = '';
+let cocktailIngredients = [];
+let searchedCockail = '';
+let ingredients = [];
+let notFound = '';
 
 app.get('/', (req, res) => {
-    res.render('homepage.ejs',{name: cocktailName, ingredients:cocktailIngredients});
+    res.render('homepage.ejs', { showModal: false });
 })
 
 app.post('/', (req, res) => {
-    const searchedCockail = req.body.cocktailName;
+    searchedCockail = req.body.cocktailName;
     try {
         axios.get(`http://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchedCockail}`).then((response) => {
-            console.log(response.data.drinks.find(item=>item.strDrink.toLowerCase() === searchedCockail.toLowerCase()))
-            const foundCocktail = response.data.drinks.find(item=>item.strDrink.toLowerCase() === searchedCockail.toLowerCase())
-            cocktailName =  foundCocktail.strDrink;
-            res.redirect('/')
+            if (response.data.drinks.find(item => item.strDrink.toLowerCase() === searchedCockail.toLowerCase())) {
+                console.log('found')
+                const foundCocktail = response.data.drinks.find(item => item.strDrink.toLowerCase() === searchedCockail.toLowerCase())
+                cocktailName = foundCocktail.strDrink;
+                console.log(foundCocktail)
+                ingredients = [{...ingredients, ingredient: foundCocktail.strIngredient1, measure:foundCocktail.strMeasure1}];
+                console.log(ingredients)
+                res.render('homepage.ejs', { name: cocktailName, ingredients: cocktailIngredients, ingredients: ingredients, cocktailNotFound: notFound, showModal: true });
+            }
+            else {
+                notFound = 'No data available for the searched cocktail :(';
+                console.log('not found')
+                res.render('homepage.ejs', { name: cocktailName, ingredients: cocktailIngredients, ingredients: ingredients, cocktailNotFound: notFound, showModal: true });
+            }
         })
     } catch (err) {
-        console.log(err)
+        console.log(err);
     }
 })
 

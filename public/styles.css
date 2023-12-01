@@ -46,6 +46,10 @@ body {
     cursor: pointer;
 }
 
+.searchBar button:disabled{
+    cursor: not-allowed;
+}
+
 .searchBar input{
     width: 304px;
     height: 33px;
@@ -79,14 +83,12 @@ body {
 }
 
 .ingredients-modal{
-    position: absolute;
-    top: 171px;
     height: fit-content;
     width: 459px;
     min-height: 205px;
     max-height: 363px;
-    left: 123px;
     padding: 22px;
     background-color: #D9D9D9;
     border-radius: 12px;
+    margin-top: 172px;
 }
