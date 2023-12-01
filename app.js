@@ -24,7 +24,7 @@ let ingredients = [];
 let notFound = '';
 
 app.get('/', (req, res) => {
-    res.render('homepage.ejs', { showModal: false });
+    res.render('homepage.ejs', { name: '', ingredients: '', ingredients: [], cocktailNotFound: '', showModal: false });
 })
 
 app.post('/', (req, res) => {
@@ -36,8 +36,27 @@ app.post('/', (req, res) => {
                 const foundCocktail = response.data.drinks.find(item => item.strDrink.toLowerCase() === searchedCockail.toLowerCase())
                 cocktailName = foundCocktail.strDrink;
                 console.log(foundCocktail)
-                ingredients = [{...ingredients, ingredient: foundCocktail.strIngredient1, measure:foundCocktail.strMeasure1}];
+                const keys = Object.keys(foundCocktail);
+                const ingredientsKeys = [];
+                const measuresKeys = [];
+                keys.forEach(el=>{
+                    if(el.includes('strIngredient')&&foundCocktail[el]!==null){
+                        ingredientsKeys.push(el)
+                    }else if(el.includes('strMeasure')&&foundCocktail[el]!==null){
+                        measuresKeys.push(el)
+                    }
+                })
+
+                ingredientsKeys.forEach((key, index) => {
+                    ingredients = [...ingredients, {ingredient:foundCocktail[key]}]
+                    // console.log(`${key}: ${foundCocktail[key]}`);
+                });
+                measuresKeys.forEach((key, index) => {
+                    ingredients = [...ingredients, {measure:foundCocktail[key]}]
+                    // console.log(`${key}: ${foundCocktail[key]}`);
+                });
                 console.log(ingredients)
+                // ingredients = [{...ingredients, ingredient: foundCocktail.strIngredient1, measure:foundCocktail.strMeasure1}];
                 res.render('homepage.ejs', { name: cocktailName, ingredients: cocktailIngredients, ingredients: ingredients, cocktailNotFound: notFound, showModal: true });
             }
             else {
