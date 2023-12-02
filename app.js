@@ -18,56 +18,59 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(dirName + '/public'));
 
 let cocktailName = '';
-let cocktailIngredients = [];
 let searchedCockail = '';
 let ingredients = [];
+let measures = [];
 let notFound = '';
 
 app.get('/', (req, res) => {
-    res.render('homepage.ejs', { name: '', ingredients: '', ingredients: [], cocktailNotFound: '', showModal: false });
+    console.log(ingredients,measures)
+    res.render('homepage.ejs', { name: '', ingredients: [], measures: [], cocktailNotFound: '', showModal: false });
 })
 
 app.post('/', (req, res) => {
-    searchedCockail = req.body.cocktailName;
-    try {
-        axios.get(`http://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchedCockail}`).then((response) => {
-            if (response.data.drinks.find(item => item.strDrink.toLowerCase() === searchedCockail.toLowerCase())) {
-                console.log('found')
-                const foundCocktail = response.data.drinks.find(item => item.strDrink.toLowerCase() === searchedCockail.toLowerCase())
-                cocktailName = foundCocktail.strDrink;
-                console.log(foundCocktail)
-                const keys = Object.keys(foundCocktail);
-                const ingredientsKeys = [];
-                const measuresKeys = [];
-                keys.forEach(el=>{
-                    if(el.includes('strIngredient')&&foundCocktail[el]!==null){
-                        ingredientsKeys.push(el)
-                    }else if(el.includes('strMeasure')&&foundCocktail[el]!==null){
-                        measuresKeys.push(el)
-                    }
-                })
+        searchedCockail = req.body.cocktailName;
+        try {
+            axios.get(`http://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchedCockail}`).then((response) => {
+                if (ingredients.length===0&&measures.length===0&&searchedCockail&&response.data.drinks.find(item => item.strDrink.toLowerCase() === searchedCockail.toLowerCase())) {
+                    console.log('found')
+                    const foundCocktail = response.data.drinks.find(item => item.strDrink.toLowerCase() === searchedCockail.toLowerCase())
+                    cocktailName = foundCocktail.strDrink;
+                    console.log(foundCocktail)
+                    const keys = Object.keys(foundCocktail);
+                    const ingredientsKeys = [];
+                    const measuresKeys = [];
+                    keys.forEach(el => {
+                        if (el.includes('strIngredient') && foundCocktail[el] !== null) {
+                            ingredientsKeys.push(el)
+                        } else if (el.includes('strMeasure') && foundCocktail[el] !== null) {
+                            measuresKeys.push(el)
+                        }
+                    })
 
-                ingredientsKeys.forEach((key, index) => {
-                    ingredients = [...ingredients, {ingredient:foundCocktail[key]}]
-                    // console.log(`${key}: ${foundCocktail[key]}`);
-                });
-                measuresKeys.forEach((key, index) => {
-                    ingredients = [...ingredients, {measure:foundCocktail[key]}]
-                    // console.log(`${key}: ${foundCocktail[key]}`);
-                });
-                console.log(ingredients)
-                // ingredients = [{...ingredients, ingredient: foundCocktail.strIngredient1, measure:foundCocktail.strMeasure1}];
-                res.render('homepage.ejs', { name: cocktailName, ingredients: cocktailIngredients, ingredients: ingredients, cocktailNotFound: notFound, showModal: true });
-            }
-            else {
-                notFound = 'No data available for the searched cocktail :(';
-                console.log('not found')
-                res.render('homepage.ejs', { name: cocktailName, ingredients: cocktailIngredients, ingredients: ingredients, cocktailNotFound: notFound, showModal: true });
-            }
-        })
-    } catch (err) {
-        console.log(err);
-    }
+                    ingredientsKeys.forEach((key, index) => {
+                        ingredients = [...ingredients, { ingredient: foundCocktail[key] }]
+                        // console.log(`${key}: ${foundCocktail[key]}`);
+                    });
+                    measuresKeys.forEach((key, index) => {
+                        measures = [...measures, { measure: foundCocktail[key] }]
+                        // console.log(`${key}: ${foundCocktail[key]}`);
+                    });
+                    console.log(ingredients, measures)
+                    // ingredients = [{...ingredients, ingredient: foundCocktail.strIngredient1, measure:foundCocktail.strMeasure1}];
+                    res.render('homepage.ejs', { name: cocktailName, ingredients: ingredients, measures: measures, cocktailNotFound: notFound, showModal: true });
+                    ingredients= [];
+                    measures= [];
+                }
+                else {
+                    notFound = 'No data available for the searched cocktail :(';
+                    console.log('not found')
+                    res.render('homepage.ejs', { name: cocktailName, ingredients: ingredients, measures: measures, cocktailNotFound: notFound, showModal: true });
+                }
+            })
+        } catch (err) {
+            console.log(err);
+        }
 })
 
 app.listen(port, () => {

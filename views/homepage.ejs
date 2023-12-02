@@ -10,15 +10,23 @@
                     </div>
                     <%}else{%>
                         <div class="ingredients-modal">
-                            <ul>
-                                <%= name %>
-                                    <% ingredients.forEach(el=>{%>
-                                        <li>
-                                            <%= el.ingredient%>
-                                                <%= el.measure%>
-                                        </li>
-                                        <%}) %>
-                            </ul>
+                            <p><%= name %></p>
+                            <div class="modal-inner-container">
+                                <ul>
+                                        <% ingredients.forEach(el=>{%>
+                                            <li>
+                                                <%= el.ingredient%>
+                                            </li>
+                                            <%}) %>
+                                </ul>
+                                <ul style="list-style: none;">
+                                        <% measures.forEach(el=>{%>
+                                            <li>
+                                                    <%= el.measure%>
+                                            </li>
+                                            <%}) %>
+                                </ul>
+                            </div>
                         </div>
                         <%}%>
                             <% }%>
@@ -31,7 +39,7 @@
                 <form class="searchBar" action="/" method="post">
                     <input type="text" name="cocktailName" id="cocktailName" class="search-cocktail-bar"
                         placeholder="Search cocktail by name" autofocus>
-                    <button type="submit"><img src="images/icons/search-icon.svg"></button>
+                    <button type="submit" ><img src="images/icons/search-icon.svg"></button>
                 </form>
                 <div class="link-container">
                     <p class="categories-text">or search it by <span><a href="">categories</a></span></p>
