@@ -30,6 +30,7 @@ app.post('/', (req, res) => {
         searchedCockail = req.body.cocktailName;
         try {
             axios.get(`http://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchedCockail}`).then((response) => {
+                console.log(response.data.drinks)
                 if (ingredients.length===0&&measures.length===0&&searchedCockail&&response.data.drinks.find(item => item.strDrink.toLowerCase() === searchedCockail.toLowerCase())) {
                     console.log('found')
                     const foundCocktail = response.data.drinks.find(item => item.strDrink.toLowerCase() === searchedCockail.toLowerCase())
@@ -56,7 +57,7 @@ app.post('/', (req, res) => {
                     });
                     console.log(ingredients, measures)
                     // ingredients = [{...ingredients, ingredient: foundCocktail.strIngredient1, measure:foundCocktail.strMeasure1}];
-                    res.render('homepage.ejs', { name: cocktailName, ingredients: ingredients, measures: measures, cocktailNotFound: notFound, showModal: true });
+                    res.render('homepage.ejs', { name: cocktailName, ingredients: ingredients, measures: measures, cocktailNotFound: '', showModal: true });
                     ingredients= [];
                     measures= [];
                 }
