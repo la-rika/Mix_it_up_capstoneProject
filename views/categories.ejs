@@ -1,0 +1,28 @@
+<%- include('parts/header') %>
+
+    <div style="display: flex;">
+        <div style="width: 50%;height: 100vh;">
+            <img src="images/background.jpeg" alt="backgroundImage" class="homepage-image">
+        </div>
+        <div style="width: 50%;">
+            <div style="display: flex;justify-content: center;">
+                <h1 class="title" style="font-size: 67px;">Mix it up</h1>
+            </div>
+            <div class="list-container">
+                <form class="cocktail-list" action="/categories" method="post">
+                    <label class="label">
+                        <span>Alcoholic</span>
+                        <input type="checkbox" name="alcohol-switch">
+                    </label>
+                    <label class="label">
+                        <span>Search by name</span>
+                        <input type="text" name="cocktail-name">
+                    </label>
+                    <button class="apply-button" type="submit">APPLY</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <%- include('parts/footer') %>

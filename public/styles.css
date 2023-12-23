@@ -112,3 +112,27 @@ body {
     width: fit-content;
 }
 
+.list-container{
+    display: flex;
+    justify-content: center;
+}
+
+.cocktail-list{
+    border: 2px solid #F4BF96;
+    width: 481px;
+    border-radius: 35px;
+    padding: 17px;
+}
+
+.label{
+    color: white;
+}
+
+.apply-button{
+    background-color: #F4BF96;
+    border-radius: 25px;
+    padding: 11px;
+    font-size: 12px;
+}
+
+
