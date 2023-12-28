@@ -20,14 +20,17 @@ let searchedCockail = '';
 let ingredients = [];
 let measures = [];
 let notFound = '';
+let drinkType = false;
+let listCocktails = [];
+let checked ;
 
 app.get('/', (req, res) => {
     console.log(ingredients, measures)
     res.render('homepage.ejs', { name: '', ingredients: [], measures: [], cocktailNotFound: '', showModal: false });
 })
 
-app.get('/categories',(req,res)=>{
-    res.render('categories.ejs')
+app.get('/categories', (req, res) => {
+    res.render('categories.ejs', {cocktailList: [], checked: false})
 })
 
 app.post('/', (req, res) => {
@@ -76,29 +79,23 @@ app.post('/', (req, res) => {
     }
 })
 
-
-
 app.post('/categories', (req, res) => {
     drinkType = req.body.drinkType
-    let alcohol;
-    switch (drinkType) {
-        case false: {
-            alcohol = 'Non_Alcoholic';
-            break;
-        }
-        case true: {
-            alcohol = 'Alcoholic';
-            break;
-        }
-        default: {
-            break;
-        }
+    var alcohol;
+    if(drinkType === 'on'){
+        alcohol = 'Alcoholic';
+        checked = true
+    }else{
+        alcohol = 'Non_Alcoholic';
+        checked = false
     }
     try {
-        axios.get(`http://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Alcoholic`)
+        axios.get(`http://www.thecocktaildb.com/api/json/v1/1/filter.php?a=${alcohol}`)
             .then((response) => {
-                console.log(response.data)
-                res.redirect('/')
+                // console.log(response.data)
+                listCocktails = response.data.drinks
+                // console.log(listCocktails)
+                res.render('categories.ejs', { cocktailList: listCocktails, checked: checked })
             })
     } catch (err) {
         console.log(err)

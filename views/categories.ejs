@@ -12,13 +12,27 @@
                 <form class="cocktail-list" action="/categories" method="post">
                     <label class="label">
                         <span>Alcoholic</span>
-                        <input type="checkbox" name="alcohol-switch">
+                        <% if(checked){%>
+                            <input type="checkbox" name="drinkType" id="drinkType" checked>
+                            <%}else{%>
+                                <input type="checkbox" name="drinkType" id="drinkType">
+                                <%}%>
                     </label>
                     <label class="label">
                         <span>Search by name</span>
-                        <input type="text" name="cocktail-name">
+                        <input type="text" name="cocktailName">
                     </label>
                     <button class="apply-button" type="submit">APPLY</button>
+                    <hr class="line-break">
+                    <div class="list-inner-container">
+                        <ul class="list">
+                            <% cocktailList.forEach(el=>{%>
+                                <li style="padding-bottom: 10px;">
+                                    <%= el.strDrink%>
+                                </li>
+                                <%}) %>
+                        </ul>
+                    </div>
                 </form>
             </div>
         </div>
