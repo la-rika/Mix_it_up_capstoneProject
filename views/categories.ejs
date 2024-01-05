@@ -2,6 +2,34 @@
 
     <div style="display: flex;">
         <div style="width: 50%;height: 100vh;">
+            <div style="position: absolute;width: 50%;height: 100vh;display: flex;justify-content: center;">
+                <%if(showModal===true){ if(cocktailNotFound !=='' ){%>
+                    <div class="ingredients-modal">
+                        <%= cocktailNotFound %>
+                    </div>
+                    <%}else{%>
+                        <div class="ingredients-modal">
+                            <p><%= name %></p>
+                            <div class="modal-inner-container">
+                                <ul>
+                                        <% ingredients.forEach(el=>{%>
+                                            <li>
+                                                <%= el.ingredient%>
+                                            </li>
+                                            <%}) %>
+                                </ul>
+                                <ul style="list-style: none;">
+                                        <% measures.forEach(el=>{%>
+                                            <li>
+                                                    <%= el.measure%>
+                                            </li>
+                                            <%}) %>
+                                </ul>
+                            </div>
+                        </div>
+                        <%}%>
+                            <% }%>
+            </div>
             <img src="images/background.jpeg" alt="backgroundImage" class="homepage-image">
         </div>
         <div style="width: 50%;">
