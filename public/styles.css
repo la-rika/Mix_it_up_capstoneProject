@@ -11,14 +11,20 @@ body {
     object-fit: cover;
 }
 
-.title {
+.title{
+    margin-bottom: 33px;
+}
+
+.title a, .title a:hover {
     color: #FFF;
     font-family: Inter;
     font-size: 97.5px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    margin-bottom: 33px;
+ 
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .form-container {

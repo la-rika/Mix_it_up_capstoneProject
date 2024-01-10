@@ -30,7 +30,15 @@ app.get('/', (req, res) => {
 })
 
 app.get('/categories', (req, res) => {
-    res.render('categories.ejs', { cocktailList: [], checked: drinkType, name: '', ingredients: [], measures:[], showModal: false})
+    try {
+        axios.get(`http://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic`)
+            .then((response) => {
+                listCocktails = response.data.drinks
+                res.render('categories.ejs', { cocktailList: listCocktails, checked: checked, name: cocktailName, ingredients: ingredients, measures: measures, cocktailNotFound: notFound, showModal: false})
+            })
+    } catch (err) {
+        console.log(err)
+    }
 })
 
 app.post('/', (req, res) => {
