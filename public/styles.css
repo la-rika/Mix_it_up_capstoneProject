@@ -175,7 +175,13 @@ body {
 
 }
 
-.list li:hover{
+.list button{
+    background: none;
+    border: none;
+    color: white;
+}
+
+.list button:hover{
     cursor: pointer;
     color: #F4BF96;
     text-decoration: underline;
