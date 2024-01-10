@@ -16,33 +16,30 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(dirName + '/public'));
 
 let cocktailName = '';
+let clickedCocktail='';
 let searchedCockail = '';
 let ingredients = [];
 let measures = [];
 let notFound = '';
-let drinkType = false;
+let drinkType ;
 let listCocktails = [];
 let checked;
 
 app.get('/', (req, res) => {
-    console.log(ingredients, measures)
     res.render('homepage.ejs', { name: '', ingredients: [], measures: [], cocktailNotFound: '', showModal: false });
 })
 
 app.get('/categories', (req, res) => {
-    res.render('categories.ejs', { cocktailList: [], checked: false, name: '', ingredients: [], measures:[], showModal: false})
+    res.render('categories.ejs', { cocktailList: [], checked: drinkType, name: '', ingredients: [], measures:[], showModal: false})
 })
 
 app.post('/', (req, res) => {
     searchedCockail = req.body.cocktailName;
     try {
         axios.get(`http://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchedCockail}`).then((response) => {
-            console.log(response.data.drinks)
             if (ingredients.length === 0 && measures.length === 0 && searchedCockail && response.data.drinks.find(item => item.strDrink.toLowerCase() === searchedCockail.toLowerCase())) {
-                console.log('found')
                 const foundCocktail = response.data.drinks.find(item => item.strDrink.toLowerCase() === searchedCockail.toLowerCase())
                 cocktailName = foundCocktail.strDrink;
-                console.log(foundCocktail)
                 const keys = Object.keys(foundCocktail);
                 const ingredientsKeys = [];
                 const measuresKeys = [];
@@ -56,13 +53,10 @@ app.post('/', (req, res) => {
 
                 ingredientsKeys.forEach((key, index) => {
                     ingredients = [...ingredients, { ingredient: foundCocktail[key] }]
-                    // console.log(`${key}: ${foundCocktail[key]}`);
                 });
                 measuresKeys.forEach((key, index) => {
                     measures = [...measures, { measure: foundCocktail[key] }]
-                    // console.log(`${key}: ${foundCocktail[key]}`);
                 });
-                console.log(ingredients, measures)
                 // ingredients = [{...ingredients, ingredient: foundCocktail.strIngredient1, measure:foundCocktail.strMeasure1}];
                 res.render('homepage.ejs', { name: cocktailName, ingredients: ingredients, measures: measures, cocktailNotFound: '', showModal: true });
                 ingredients = [];
@@ -70,30 +64,26 @@ app.post('/', (req, res) => {
             }
             else {
                 notFound = 'No data available for the searched cocktail :(';
-                console.log('not found')
                 res.render('homepage.ejs', { name: cocktailName, ingredients: ingredients, measures: measures, cocktailNotFound: notFound, showModal: true });
             }
         })
     } catch (err) {
-        console.log(err);
+        console.log(err)
     }
 })
 
 app.post('/categories', (req, res) => {
     drinkType = req.body.drinkType;
     cocktailName = req.body.cocktailName;
-
+    clickedCocktail = req.body.clickedCocktail;
     var alcohol;
+
     if (cocktailName !== '') {
-        console.log(cocktailName)
         try {
             axios.get(`http://www.thecocktaildb.com/api/json/v1/1/search.php?s=${cocktailName}`).then((response) => {
-                console.log(response.data.drinks)
                 if (ingredients.length === 0 && measures.length === 0 && cocktailName && response.data.drinks.find(item => item.strDrink.toLowerCase() === cocktailName.toLowerCase())) {
-                    console.log('found')
                     const foundCocktail = response.data.drinks.find(item => item.strDrink.toLowerCase() === cocktailName.toLowerCase())
                     cocktailName = foundCocktail.strDrink;
-                    console.log(foundCocktail)
                     const keys = Object.keys(foundCocktail);
                     const ingredientsKeys = [];
                     const measuresKeys = [];
@@ -107,13 +97,10 @@ app.post('/categories', (req, res) => {
     
                     ingredientsKeys.forEach((key, index) => {
                         ingredients = [...ingredients, { ingredient: foundCocktail[key] }]
-                        // console.log(`${key}: ${foundCocktail[key]}`);
                     });
                     measuresKeys.forEach((key, index) => {
                         measures = [...measures, { measure: foundCocktail[key] }]
-                        // console.log(`${key}: ${foundCocktail[key]}`);
                     });
-                    console.log(ingredients, measures)
                     // ingredients = [{...ingredients, ingredient: foundCocktail.strIngredient1, measure:foundCocktail.strMeasure1}];
                     res.render('categories.ejs', { name: cocktailName, ingredients: ingredients, measures: measures, cocktailNotFound: '', showModal: true, checked:checked, cocktailList:listCocktails });
                     ingredients = [];
@@ -121,12 +108,49 @@ app.post('/categories', (req, res) => {
                 }
                 else {
                     notFound = 'No data available for the searched cocktail :(';
-                    console.log('not found')
                     res.render('categories.ejs', { name: cocktailName, ingredients: ingredients, measures: measures, cocktailNotFound: notFound, showModal: true, checked:checked, cocktailList:listCocktails});
                 }
             })
         } catch (err) {
-            console.log(err);
+            console.log(err)
+        }
+    }else if(clickedCocktail){
+        try {
+            axios.get(`http://www.thecocktaildb.com/api/json/v1/1/search.php?s=${clickedCocktail}`).then((response) => {
+                if (ingredients.length === 0 && measures.length === 0 && clickedCocktail && response.data.drinks.find(item => item.strDrink.toLowerCase() === clickedCocktail.toLowerCase())) {
+       
+                    const foundCocktail = response.data.drinks.find(item => item.strDrink.toLowerCase() === clickedCocktail.toLowerCase())
+                    clickedCocktail = foundCocktail.strDrink;
+          
+                    const keys = Object.keys(foundCocktail);
+                    const ingredientsKeys = [];
+                    const measuresKeys = [];
+                    keys.forEach(el => {
+                        if (el.includes('strIngredient') && foundCocktail[el] !== null) {
+                            ingredientsKeys.push(el)
+                        } else if (el.includes('strMeasure') && foundCocktail[el] !== null) {
+                            measuresKeys.push(el)
+                        }
+                    })
+    
+                    ingredientsKeys.forEach((key, index) => {
+                        ingredients = [...ingredients, { ingredient: foundCocktail[key] }]
+                    });
+                    measuresKeys.forEach((key, index) => {
+                        measures = [...measures, { measure: foundCocktail[key] }]
+                    });
+                    // ingredients = [{...ingredients, ingredient: foundCocktail.strIngredient1, measure:foundCocktail.strMeasure1}];
+                    res.render('categories.ejs', { name: clickedCocktail, ingredients: ingredients, measures: measures, cocktailNotFound: '', showModal: true, checked:checked, cocktailList:listCocktails });
+                    ingredients = [];
+                    measures = [];
+                }
+                else {
+                    notFound = 'No data available for the searched cocktail :(';
+                    res.render('categories.ejs', { name: clickedCocktail, ingredients: ingredients, measures: measures, cocktailNotFound: notFound, showModal: true, checked:checked, cocktailList:listCocktails});
+                }
+            })
+        } catch (err) {
+            console.log(err)
         }
     } else {
         if (drinkType === 'on') {
@@ -139,9 +163,7 @@ app.post('/categories', (req, res) => {
         try {
             axios.get(`http://www.thecocktaildb.com/api/json/v1/1/filter.php?a=${alcohol}`)
                 .then((response) => {
-                    // console.log(response.data)
                     listCocktails = response.data.drinks
-                    // console.log(listCocktails)
                     res.render('categories.ejs', { cocktailList: listCocktails, checked: checked, name: cocktailName, ingredients: ingredients, measures: measures, cocktailNotFound: notFound, showModal: false})
                 })
         } catch (err) {

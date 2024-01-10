@@ -53,14 +53,20 @@
                     <button class="apply-button" type="submit">APPLY</button>
                     <hr class="line-break">
                     <div class="list-inner-container">
-                        <ul class="list">
-                            <% cocktailList.forEach(el=>{%>
-                                <li style="padding-bottom: 10px;">
-                                    <%= el.strDrink%>
-                                </li>
-                                <%}) %>
-                        </ul>
+                        <form action="/categories" method="post" >
+                            <ul class="list">
+                                <% cocktailList.forEach(el=>{%>
+                                    <div>
+                                        <button style="padding-bottom: 10px;" type="submit" name="clickedCocktail" value="<%= el.strDrink %>">
+                                            <%= el.strDrink%>
+                                        </button>
+                                    </div>
+                             
+                                    <%}) %>
+                            </ul>
+                        </form>
                     </div>
+             
                 </form>
             </div>
         </div>
