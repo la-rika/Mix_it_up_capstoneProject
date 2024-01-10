@@ -31,7 +31,7 @@ app.post('/', (req, res) => {
         try {
             axios.get(`http://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchedCockail}`).then((response) => {
                 console.log(response.data.drinks)
-                if (ingredients.length===0&&measures.length===0&&searchedCockail&&response.data.drinks.find(item => item.strDrink.toLowerCase() === searchedCockail.toLowerCase())) {
+                if (ingredients.length===0&&measures.length===0&&searchedCockail&&response.data.drinks?.find(item => item.strDrink.toLowerCase() === searchedCockail.toLowerCase())) {
                     console.log('found')
                     const foundCocktail = response.data.drinks.find(item => item.strDrink.toLowerCase() === searchedCockail.toLowerCase())
                     cocktailName = foundCocktail.strDrink;
