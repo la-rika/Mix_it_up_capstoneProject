@@ -37,7 +37,7 @@ app.post('/', (req, res) => {
     searchedCockail = req.body.cocktailName;
     try {
         axios.get(`http://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchedCockail}`).then((response) => {
-            if (ingredients.length === 0 && measures.length === 0 && searchedCockail && response.data.drinks.find(item => item.strDrink.toLowerCase() === searchedCockail.toLowerCase())) {
+            if (ingredients.length === 0 && measures.length === 0 && searchedCockail && response.data.drinks?.find(item => item.strDrink.toLowerCase() === searchedCockail.toLowerCase())) {
                 const foundCocktail = response.data.drinks.find(item => item.strDrink.toLowerCase() === searchedCockail.toLowerCase())
                 cocktailName = foundCocktail.strDrink;
                 const keys = Object.keys(foundCocktail);
@@ -81,7 +81,7 @@ app.post('/categories', (req, res) => {
     if (cocktailName !== '') {
         try {
             axios.get(`http://www.thecocktaildb.com/api/json/v1/1/search.php?s=${cocktailName}`).then((response) => {
-                if (ingredients.length === 0 && measures.length === 0 && cocktailName && response.data.drinks.find(item => item.strDrink.toLowerCase() === cocktailName.toLowerCase())) {
+                if (ingredients.length === 0 && measures.length === 0 && cocktailName && response.data.drinks?.find(item => item.strDrink.toLowerCase() === cocktailName.toLowerCase())) {
                     const foundCocktail = response.data.drinks.find(item => item.strDrink.toLowerCase() === cocktailName.toLowerCase())
                     cocktailName = foundCocktail.strDrink;
                     const keys = Object.keys(foundCocktail);
