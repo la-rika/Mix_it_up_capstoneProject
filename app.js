@@ -65,7 +65,6 @@ app.post('/', (req, res) => {
                 measuresKeys.forEach((key, index) => {
                     measures = [...measures, { measure: foundCocktail[key] }]
                 });
-                // ingredients = [{...ingredients, ingredient: foundCocktail.strIngredient1, measure:foundCocktail.strMeasure1}];
                 res.render('homepage.ejs', { name: cocktailName, ingredients: ingredients, measures: measures, cocktailNotFound: '', showModal: true });
                 ingredients = [];
                 measures = [];
@@ -109,7 +108,6 @@ app.post('/categories', (req, res) => {
                     measuresKeys.forEach((key, index) => {
                         measures = [...measures, { measure: foundCocktail[key] }]
                     });
-                    // ingredients = [{...ingredients, ingredient: foundCocktail.strIngredient1, measure:foundCocktail.strMeasure1}];
                     res.render('categories.ejs', { name: cocktailName, ingredients: ingredients, measures: measures, cocktailNotFound: '', showModal: true, checked:checked, cocktailList:listCocktails });
                     ingredients = [];
                     measures = [];
@@ -147,7 +145,6 @@ app.post('/categories', (req, res) => {
                     measuresKeys.forEach((key, index) => {
                         measures = [...measures, { measure: foundCocktail[key] }]
                     });
-                    // ingredients = [{...ingredients, ingredient: foundCocktail.strIngredient1, measure:foundCocktail.strMeasure1}];
                     res.render('categories.ejs', { name: clickedCocktail, ingredients: ingredients, measures: measures, cocktailNotFound: '', showModal: true, checked:checked, cocktailList:listCocktails });
                     ingredients = [];
                     measures = [];
