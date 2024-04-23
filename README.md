@@ -1,9 +1,11 @@
 # Mix_it_up_capstoneProject
 Capstone projects are progects assigned by coding courses to practice new skills just learned.
 
-DB: mongoDB
-Programming languages: node + ejs 
-Libraries and frameworks: mongoose, express
+<ul>
+  <li>DB: mongoDB</li>
+  <li>Programming languages: node + ejs </li>
+  <li>Libraries and frameworks: mongoose, express</li>
+</ul>
 
 <h2>RESOURCES</h2>
 <ul>
